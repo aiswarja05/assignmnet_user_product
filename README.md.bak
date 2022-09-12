@@ -8,12 +8,12 @@
 
 ## User Registration, Login and Authorization process.
 
-![spring-boot-security-login-jwt-flow](spring-boot-security-login-jwt-flow.png)
+![spring-boot-login-example-flow](spring-boot-login-example-flow.png)
 
 ## Spring Boot Server Architecture with Spring Security
 You can have an overview of our Spring Boot Server with the diagram below:
 
-![spring-boot-security-login-jwt-architecture](spring-boot-security-login-jwt-architecture.png)
+![spring-boot-login-example-architecture](spring-boot-login-example-architecture.png)
 
 For more detail, please visit:
 > [Spring Boot Security Login example with JWT and H2 example](https://www.bezkoder.com/spring-boot-security-login-jwt/)
