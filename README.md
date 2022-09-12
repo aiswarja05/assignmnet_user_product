@@ -121,7 +121,7 @@
 </pre>
 
 <pre>
-  <b>find the collection of this service from <b> <a href="/Joyee.postman_collection.json" target="_blank">here</a>
+  <b>find the collection of this service from <b> <a href="https://www.getpostman.com/collections/c40515a213be007e6031" target="_blank">here</a>
 </pre>
 
 
