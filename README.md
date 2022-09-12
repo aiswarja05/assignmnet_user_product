@@ -1,146 +1,129 @@
-# Spring Boot Security Login example with JWT and H2 example
+# Spring Secure Login by jwt authentication with rolewise privilage
+<p>
+  <h3>Spring Boot Security Login example with JWT and H2 database</h3> 
+<p/>
 
-- Appropriate Flow for User Login and Registration with JWT and HttpOnly Cookie
-- Spring Boot Rest Api Architecture with Spring Security
-- How to configure Spring Security to work with JWT
-- How to define Data Models and association for Authentication and Authorization
-- Way to use Spring Data JPA to interact with H2 Database
+<p>
+  <ul>
+    <li>Appropriate Flow for User Login and Registration with JWT</li>
+    <li>Spring Boot Rest Api Architecture with Spring Security</li>
+    <li>How to configure Spring Security to work with JWT</li>
+    <li>How to define Data Models and association for Authentication and Authorization</li>
+    <li>Way to use Spring Data JPA to interact with H2 Database</li>
+  </ul>
+</p>
 
-## User Registration, Login and Authorization process.
+<p>
+  <h3>User Registration, Login and Authorization process.</h3>
+</p>
 
-![spring-boot-security-login-jwt-flow](spring-boot-security-login-jwt-flow.png)
+<p>
+  <a href="https://www.joyee.com/">
+    <img alt="Qries" src="https://github.com/bezkoder/spring-boot-security-login/blob/master/spring-boot-security-login-jwt-flow.png" width=700" height="400">
+  </a>
+</p>
 
-## Spring Boot Server Architecture with Spring Security
-You can have an overview of our Spring Boot Server with the diagram below:
+<p>
+  <h3>Spring Boot Server Architecture with Spring Security</h3>
+</p>
 
-![spring-boot-security-login-jwt-architecture](spring-boot-security-login-jwt-architecture.png)
+<p>
+  You can have an overview of our Spring Boot Server with the diagram below:
+</p>
 
-For more detail, please visit:
-> [Spring Boot Security Login example with JWT and H2 example](https://www.bezkoder.com/spring-boot-security-login-jwt/)
+<p>
+  <a href="https://www.joyee.com/">
+    <img alt="Qries" src="https://github.com/bezkoder/spring-boot-security-login/blob/master/spring-boot-security-login-jwt-architecture.png" width=700" height="400">
+  </a>
+</p>
 
-> [For MySQL](https://www.bezkoder.com/spring-boot-login-example-mysql/)
+<p>
+  <h3>Dependency</h3>
+  to user h2 database
+</p>
+<pre>
+  <code>
+    <span class="pl-ent">dependency</span>
+      <span class="pl-ent">groupId</span>&gt;com.h2database&lt;/<span class="pl-ent">groupId</span>
+      <span class="pl-ent">artifactId</span>&gt;h2&lt;/<span class="pl-ent">artifactId</span>
+      <span class="pl-ent">scope</span>&gt;runtime&lt;/<span class="pl-ent">scope</span>
+    <span class="pl-ent">dependency</span>
+  </code>
+</pre>
 
-> [For MongoDB](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/)
+<p>
+  for jwt
+</p>
 
-## Dependency
-– If you want to use PostgreSQL:
-```xml
-<dependency>
-  <groupId>org.postgresql</groupId>
-  <artifactId>postgresql</artifactId>
-  <scope>runtime</scope>
-</dependency>
-```
-– or MySQL:
-```xml
-<dependency>
-  <groupId>mysql</groupId>
-  <artifactId>mysql-connector-java</artifactId>
-  <scope>runtime</scope>
-</dependency>
-```
-## Configure Spring Datasource, JPA, App properties
-Open `src/main/resources/application.properties`
-- For PostgreSQL:
-```
-spring.datasource.url= jdbc:postgresql://localhost:5432/testdb
-spring.datasource.username= postgres
-spring.datasource.password= 123
+<pre>
+  <code>
+    <span class="pl-ent">dependency</span>
+      <span class="pl-ent">groupId</span>&gt;io.jsonwebtoken&lt;/<span class="pl-ent">groupId</span>
+      <span class="pl-ent">artifactId</span>&gt;jjwt&lt;/<span class="pl-ent">artifactId</span>
+      <span class="pl-ent">version</span>&gt;0.9.1&lt;/<span class="pl-ent">version</span>
+    <span class="pl-ent">dependency</span>
+  </code>
+</pre>
 
-spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation= true
-spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
+<p>
+  for spring security
+</p>
 
-# Hibernate ddl auto (create, create-drop, validate, update)
-spring.jpa.hibernate.ddl-auto= update
+<pre>
+  <code>
+    <span class="pl-ent">dependency</span>
+      <span class="pl-ent">groupId</span>&gt;org.springframework.security.oauth&lt;/<span class="pl-ent">groupId</span>
+      <span class="pl-ent">artifactId</span>&gt;spring-security-oauth2&lt;/<span class="pl-ent">artifactId</span>
+      <span class="pl-ent">version</span>&gt;2.0.2.RELEASE&lt;/<span class="pl-ent">version</span>
+    <span class="pl-ent">dependency</span>
+  </code>
+</pre>
 
-# App Properties
-bezkoder.app.jwtSecret= bezKoderSecretKey
-bezkoder.app.jwtExpirationMs= 86400000
-```
-- For MySQL
-```
-spring.datasource.url= jdbc:mysql://localhost:3306/testdb?useSSL=false
-spring.datasource.username= root
-spring.datasource.password= 123456
+<p>
+  <h3>Configure Spring Datasource, JPA, App properties</h3>
+  Open <code>src/main/resources/application.properties</code>
+</p>
 
-spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL5InnoDBDialect
-spring.jpa.hibernate.ddl-auto= update
+<pre>
+  <code>
+    spring.h2.console.enabled=true
+    # default path: h2-console
+    spring.h2.console.path=/h2-ui
 
-# App Properties
-bezkoder.app.jwtSecret= bezKoderSecretKey
-bezkoder.app.jwtExpirationMs= 86400000
-```
-## Run Spring Boot application
-```
-mvn spring-boot:run
-```
+    spring.datasource.url=jdbc:h2:file:./testdb
+    spring.datasource.driverClassName=org.h2.Driver
+    spring.datasource.username=sa
+    spring.datasource.password=
 
-## Run following SQL insert statements
-```
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-```
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+    spring.jpa.hibernate.ddl-auto= update
 
-## Refresh Token
+    # App Properties
+    joyee.app.jwtSecret= no7nd1ixe0
+    joyee.app.jwtExpirationMs= 5400000
 
-[Spring Boot Refresh Token with JWT example](https://www.bezkoder.com/spring-boot-refresh-token-jwt/)
+    server.port=9310
+  </code>
+</pre>
 
-## Fullstack CRUD App
+<p>
+  <h3>To run this application execute the maven command</h3>
+</p>
+<pre>
+  <code>
+    mvn spring-boot:run
+  </code>
+</pre>
 
-> [Vue.js + Spring Boot + H2 Embedded database example](https://www.bezkoder.com/spring-boot-vue-js-crud-example/)
+<pre>
+  <b>check the database UI from<b> <a href="http://localhost:9310/h2-ui" target="_blank">here</a>
+</pre>
 
-> [Vue.js + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-vue-js-mysql/)
+<pre>
+  <b>find the collection of this service from <b> <a href="https://www.getpostman.com/collections/b7461381020230715da2" target="_blank">here</a>
+</pre>
 
-> [Vue.js + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-vue-js-postgresql/)
 
-> [Angular 8 + Spring Boot + Embedded database example](https://www.bezkoder.com/angular-spring-boot-crud/)
 
-> [Angular 8 + Spring Boot + MySQL example](https://www.bezkoder.com/angular-spring-boot-crud/)
 
-> [Angular 8 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/angular-spring-boot-postgresql/)
-
-> [Angular 10 + Spring Boot + MySQL example](https://www.bezkoder.com/angular-10-spring-boot-crud/)
-
-> [Angular 10 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/angular-10-spring-boot-postgresql/)
-
-> [Angular 11 + Spring Boot + MySQL example](https://www.bezkoder.com/angular-11-spring-boot-crud/)
-
-> [Angular 11 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/angular-11-spring-boot-postgresql/)
-
-> [Angular 12 + Spring Boot + Embedded database example](https://www.bezkoder.com/angular-12-spring-boot-crud/)
-
-> [Angular 12 + Spring Boot + MySQL example](https://www.bezkoder.com/angular-12-spring-boot-mysql/)
-
-> [Angular 12 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/angular-12-spring-boot-postgresql/)
-
-> [Angular 13 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-13-crud/)
-
-> [Angular 13 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-13-mysql/)
-
-> [Angular 13 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-13-postgresql/)
-
-> [React + Spring Boot + MySQL example](https://www.bezkoder.com/react-spring-boot-crud/)
-
-> [React + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-react-postgresql/)
-
-> [React + Spring Boot + MongoDB example](https://www.bezkoder.com/react-spring-boot-mongodb/)
-
-Run both Back-end & Front-end in one place:
-> [Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-spring-boot/)
-
-> [Integrate React.js with Spring Boot Rest API](https://www.bezkoder.com/integrate-reactjs-spring-boot/)
-
-> [Integrate Vue.js with Spring Boot Rest API](https://www.bezkoder.com/integrate-vue-spring-boot/)
-
-More Practice:
-> [Spring Boot File upload example with Multipart File](https://www.bezkoder.com/spring-boot-file-upload/)
-
-> [Exception handling: @RestControllerAdvice example in Spring Boot](https://www.bezkoder.com/spring-boot-restcontrolleradvice/)
-
-> [Spring Boot Repository Unit Test with @DataJpaTest](https://www.bezkoder.com/spring-boot-unit-test-jpa-repo-datajpatest/)
-
-Deployment:
-> [Deploy Spring Boot App on AWS – Elastic Beanstalk](https://www.bezkoder.com/deploy-spring-boot-aws-eb/)
-
-> [Docker Compose Spring Boot and MySQL example](https://www.bezkoder.com/docker-compose-spring-boot-mysql/)
