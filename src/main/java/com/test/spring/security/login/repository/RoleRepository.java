@@ -13,4 +13,5 @@ import com.test.spring.security.login.models.Role;
 public interface RoleRepository extends JpaRepository<Role, Long> {
   Optional<Role> findByName(ERole name);
   List<Role> findAll();
+  boolean existsByName(ERole name);
 }

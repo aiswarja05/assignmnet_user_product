@@ -1,0 +1,11 @@
+[
+  {
+    "name" : "ROLE_USER"
+  },
+  {
+    "name" : "ROLE_SUPERVISOR"
+  },
+  {
+    "name" : "ROLE_ADMIN"
+  }
+]
